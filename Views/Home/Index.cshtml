@@ -1,100 +1,137 @@
 ﻿@{
-    ViewData["Title"] = "ShopNest";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Home";
+    Layout = null;
 }
 
-@section Styles {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=10px, initial-scale=1.0" />
+    <title>ShopNest</title>
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Animate.css & AOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
     <style>
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f5f7;
+            background-color: #f8f9fa;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
         }
 
         .hero {
-            background-color: #ffffff;
-            padding: 100px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
         }
 
-            .hero h1 {
-                font-size: 2.8rem;
-                color: #4b0082;
+            .hero video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                min-width: 100%;
+                min-height: 100%;
+                object-fit: cover;
+                z-index: -2;
             }
 
-            .hero p {
-                font-size: 1.2rem;
-                color: #555;
+            .hero .overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: -1;
             }
 
         .hover-card {
-            transition: transform 0.25s ease;
-            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
         }
 
             .hover-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+                transform: translateY(-10px);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             }
 
-        footer {
-            background-color: #4b0082;
+        .testimonials {
+            background-color: #fff;
+            padding: 4rem 0;
+        }
+
+        .newsletter {
+            background-color: #3e3c8d;
             color: white;
-            padding: 1rem 0;
+            padding: 3rem 1rem;
+        }
+
+        footer {
+            background-color: #3e3c8d;
+            color: white;
+            padding: 1.5rem 0;
         }
     </style>
-}
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+        <div class="container">
+            <!-- ShopNest on the left -->
+            <a class="navbar-brand" href="#">ShopNest</a>
 
-<section class="hero mt-5">
-    <div class="container text-center">
-        <h1 class="fw-bold mb-3">Shop Smarter with ShopNest</h1>
-        <p class="lead mb-0 text-muted">
-            Track product performance, monitor inventory, and gain real-time insights<br />
-            to grow your online store — all from one dashboard.
-        </p>
-    </div>
-</section>
+            <!-- Toggle for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<section class="py-5 bg-light">
-    <div class="container">
-        <h3 class="text-center mb-5">What You Can Do</h3>
-        <div class="row text-center g-4">
-            <!-- Inventory -->
-            <div class="col-md-4">
-                <a asp-controller="Manage" asp-action="Index" class="text-decoration-none text-dark">
-                    <div class="card p-4 hover-card">
-                        <i class="bi bi-box-seam display-6 text-danger mb-3"></i>
-                        <h5 class="card-title">Inventory Control</h5>
-                        <p class="card-text">Create, edit, and manage product data with intuitive CRUD tools.</p>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Visual Analytics -->
-            <div class="col-md-4">
-                <a href="/data-visualization.html" class="text-decoration-none text-dark">
-                    <div class="card p-4 hover-card">
-                        <i class="bi bi-graph-up-arrow display-6 text-success mb-3"></i>
-                        <h5 class="card-title">Visual Analytics</h5>
-                        <p class="card-text">Monitor sales and inventory through interactive Chart.js visualizations.</p>
-                    </div>
-                </a>
-            </div>
-
-            <!-- About -->
-            <div class="col-md-4">
-                <a asp-controller="Home" asp-action="About" class="text-decoration-none text-dark">
-                    <div class="card p-4 hover-card">
-                        <i class="bi bi-people-fill display-6 text-primary mb-3"></i>
-                        <h5 class="card-title">Meet the Creators</h5>
-                        <p class="card-text">Learn about the team and explore the project's data model.</p>
-                    </div>
-                </a>
+            <!-- Links on the right -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Products" asp-action="View">Inventory</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">About</a></li>
+                </ul>
             </div>
         </div>
-    </div>
-</section>
+    </nav>
+
+
+
+    <section class="hero d-flex align-items-center text-center text-white">
+        <video autoplay muted loop playsinline>
+            <source src="https://videos.pexels.com/video-files/5585952/5585952-hd_1920_1080_25fps.mp4" type="video/mp4" />
+        </video>
+        <div class="container z-1 position-relative">
+            <h1 class="display-3 animate__animated animate__fadeInDown">Welcome to ShopNest</h1>
+            <p class="lead animate__animated animate__fadeInUp mt-3">Smarter Inventory. Real-Time Insights. Total Control.</p>
+            <a asp-controller="Home" asp-action="Landing" class="btn btn-primary btn-lg mt-4 animate__animated animate__zoomIn">Get Started</a>
+        </div>
+    </section>
+
+
+
+
+
+    <footer class="text-center mt-auto">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 ShopNest — All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000 });
+    </script>
+</body>
+</html>

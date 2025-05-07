@@ -1,0 +1,141 @@
+﻿@{
+    ViewData["Title"] = "Data Visualization";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5 pt-5">
+    <h2 class="text-center mb-4 text-primary-custom">Visual Analytics</h2>
+
+    <!-- Bar Chart -->
+    <div class="mb-5">
+        <canvas id="barChart" height="100"></canvas>
+    </div>
+
+    <!-- Pie Chart (Smaller + Centered) -->
+    <div class="mb-5 d-flex justify-content-center">
+        <canvas id="pieChart" style="max-width: 400px; max-height: 400px;"></canvas>
+    </div>
+
+    <!-- Line Chart -->
+    <div>
+        <canvas id="lineChart" height="100"></canvas>
+    </div>
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <a asp-controller="Home" asp-action="Landing" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Home
+        </a>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        async function fetchProductData() {
+            const apiData = await fetch("https://fakestoreapi.com/products").then(res => res.json());
+            const localData = JSON.parse(localStorage.getItem("products")) || [];
+
+            const allProducts = [
+                ...apiData.map(p => ({
+                    name: p.title,
+                    category: p.category,
+                    price: p.price,
+                    stock: p.rating?.count || 0
+                })),
+                ...localData
+            ];
+
+            return allProducts;
+        }
+
+        function prepareChartData(products) {
+            const labels = products.map(p => p.name.length > 20 ? p.name.substring(0, 20) + '…' : p.name);
+            const priceData = products.map(p => p.price);
+            const stockData = products.map(p => p.stock || 0);
+
+            // Pie by category
+            const categoryMap = {};
+            products.forEach(p => {
+                categoryMap[p.category] = (categoryMap[p.category] || 0) + 1;
+            });
+
+            return {
+                labels,
+                priceData,
+                stockData,
+                categoryLabels: Object.keys(categoryMap),
+                categoryCounts: Object.values(categoryMap)
+            };
+        }
+
+        async function renderCharts() {
+            const products = await fetchProductData();
+            const data = prepareChartData(products);
+
+            // Bar Chart – Price per Product
+            new Chart(document.getElementById("barChart"), {
+                type: "bar",
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: "Price ($)",
+                        data: data.priceData,
+                        backgroundColor: "rgba(75, 0, 130, 0.6)"
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Pie Chart – Product Count per Category
+            new Chart(document.getElementById("pieChart"), {
+                type: "pie",
+                data: {
+                    labels: data.categoryLabels,
+                    datasets: [{
+                        label: "Category",
+                        data: data.categoryCounts,
+                        backgroundColor: [
+                            "#4b0082", "#ff6384", "#36a2eb", "#ffce56", "#33cc99", "#9966ff"
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: "bottom" } }
+                }
+            });
+
+            // Line Chart – Stock per Product
+            new Chart(document.getElementById("lineChart"), {
+                type: "line",
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: "Stock",
+                        data: data.stockData,
+                        fill: false,
+                        borderColor: "#3e95cd",
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        window.onload = renderCharts;
+    </script>
+}

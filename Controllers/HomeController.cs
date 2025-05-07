@@ -18,6 +18,12 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Landing()
+    {
+        return View();
+    }
+
+
     public IActionResult Privacy()
     {
         return View();
@@ -27,6 +33,12 @@ public class HomeController : Controller
     {
         return View();
     }
+    public IActionResult Dashboard()
+    {
+        return View();
+    }
+
+
 
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
