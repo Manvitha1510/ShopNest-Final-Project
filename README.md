@@ -16,7 +16,7 @@ ShopNest is an innovative ASP.NET Core MVC web application designed to simplify 
 
 ## Data Model (ER Diagram)
 
-```plaintext
+```
 ┌───────────────┐          ┌────────────────────┐
 │   Category    │◄───────┐ │     Product        │
 ├───────────────┤        │ ├────────────────────┤
@@ -28,36 +28,39 @@ ShopNest is an innovative ASP.NET Core MVC web application designed to simplify 
                            │ CategoryId (FK)    │
                            └────────────────────┘
 
----
+```
 
 ## CRUD Implementation Overview
 
-- **Create**: Adding new Product
-- **view**: Displaying the products information
-- **Update**: Edit excisting Products
-- **Delete**: Removing the products from the list
+- **Create**: Adding new products  
+- **View**: Displaying the product information  
+- **Update**: Editing existing products  
+- **Delete**: Removing products from the list
 
 ---
+
 ## Technical Challenges & Solutions
 
 | Challenge                          | Solution                                                                 |
-|------------------------------------|--------------------------------------------------------------------------|
-| Azure deployment configuration     | Resolved through systematic troubleshooting and Microsoft documentation  |
-| Form validation & UI feedback      | Implemented client-side(JavaScript) + server-side(ModelState) validation |
-| Data model relationships           | Established one-to-many (Category→Product) with foreign keys             |
+|-----------------------------------|--------------------------------------------------------------------------|
+| Azure deployment configuration    | Resolved through systematic troubleshooting and Microsoft documentation  |
+| Form validation & UI feedback     | Implemented client-side (JavaScript) + server-side (ModelState) validation |
+| Data model relationships          | Established one-to-many (Category → Product) with foreign keys           |
 
 ---
 
 ## Tech Stack
 
-- ASP.NET Core MVC (.NET 7/8)
-- C#
-- Chart.js (for interactive data visualization)
+- ASP.NET Core MVC (.NET 7/8)  
+- C#  
+- Chart.js (for interactive data visualization)  
 - fakestoreapi
 
 ---
 
 ## Folder Structure
+
+
 
 ```
 /Controllers
