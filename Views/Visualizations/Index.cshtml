@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Sales Visualizations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        body {
+            background-color: #f4f5f7;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .chart-container {
+            max-width: 700px;
+            height: 450px;
+            margin: 40px auto;
+        }
+
+        footer {
+            background-color: #4b0082;
+            color: white;
+            padding: 1rem 0;
+        }
+
+        h1, h3 {
+            color: #4b0082;
+        }
+    </style>
+}
+
+<main class="container py-5 mt-4">
+    <h1 class="text-center fw-bold mb-3">ShopNest Analytics</h1>
+    <p class="text-center text-muted">Visualize your store’s performance through interactive dashboards.</p>
+
+    <div class="chart-container">
+        <h3 class="text-center">Monthly Sales</h3>
+        <canvas id="salesChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h3 class="text-center">Product Category Distribution</h3>
+        <canvas id="categoryChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h3 class="text-center">Inventory Trend</h3>
+        <canvas id="inventoryChart"></canvas>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sales Bar Chart
+        new Chart(document.getElementById('salesChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+                datasets: [{
+                    label: 'Sales ($)',
+                    data: [1200, 1800, 1400, 2000],
+                    backgroundColor: 'rgba(75, 0, 130, 0.7)'
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        // Category Pie Chart
+        new Chart(document.getElementById('categoryChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Skincare', 'Electronics', 'Clothing', 'Books'],
+                datasets: [{
+                    label: 'Products',
+                    data: [30, 25, 20, 25],
+                    backgroundColor: [
+                        '#6f42c1',
+                        '#20c997',
+                        '#ffc107',
+                        '#fd7e14'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        // Inventory Line Chart
+        new Chart(document.getElementById('inventoryChart'), {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Total Units in Inventory',
+                    data: [500, 470, 430, 410],
+                    borderColor: 'rgba(75, 0, 130, 0.9)',
+                    tension: 0.3,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+}

@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "ShopNest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f5f7;
+        }
+
+        .hero {
+            background-color: #ffffff;
+            padding: 100px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+            .hero h1 {
+                font-size: 2.8rem;
+                color: #4b0082;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+                color: #555;
+            }
+
+        .hover-card {
+            transition: transform 0.25s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+            .hover-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            }
+
+        footer {
+            background-color: #4b0082;
+            color: white;
+            padding: 1rem 0;
+        }
+    </style>
+}
+
+<section class="hero mt-5">
+    <div class="container text-center">
+        <h1 class="fw-bold mb-3">Shop Smarter with ShopNest</h1>
+        <p class="lead mb-0 text-muted">
+            Track product performance, monitor inventory, and gain real-time insights<br />
+            to grow your online store — all from one dashboard.
+        </p>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h3 class="text-center mb-5">What You Can Do</h3>
+        <div class="row text-center g-4">
+            <!-- Inventory -->
+            <div class="col-md-4">
+                <a asp-controller="Manage" asp-action="Index" class="text-decoration-none text-dark">
+                    <div class="card p-4 hover-card">
+                        <i class="bi bi-box-seam display-6 text-danger mb-3"></i>
+                        <h5 class="card-title">Inventory Control</h5>
+                        <p class="card-text">Create, edit, and manage product data with intuitive CRUD tools.</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Visual Analytics -->
+            <div class="col-md-4">
+                <a href="/data-visualization.html" class="text-decoration-none text-dark">
+                    <div class="card p-4 hover-card">
+                        <i class="bi bi-graph-up-arrow display-6 text-success mb-3"></i>
+                        <h5 class="card-title">Visual Analytics</h5>
+                        <p class="card-text">Monitor sales and inventory through interactive Chart.js visualizations.</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- About -->
+            <div class="col-md-4">
+                <a asp-controller="Home" asp-action="About" class="text-decoration-none text-dark">
+                    <div class="card p-4 hover-card">
+                        <i class="bi bi-people-fill display-6 text-primary mb-3"></i>
+                        <h5 class="card-title">Meet the Creators</h5>
+                        <p class="card-text">Learn about the team and explore the project's data model.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
