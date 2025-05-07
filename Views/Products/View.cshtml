@@ -11,7 +11,10 @@
         </a>
     </div>
 
-    <p class="text-center text-muted">Browse through your current product inventory with edit/delete options.</p>
+    <p class="text-center text-muted">Browse through your current product inventory</p>
+
+    <!-- Alert area -->
+    <div id="statusMessage" class="alert alert-success text-center d-none" role="alert"></div>
 
     <div class="table-responsive bg-white rounded shadow p-4 mt-4">
         <table class="table table-striped table-bordered align-middle">
@@ -30,7 +33,7 @@
     </div>
 
     <div class="text-center mt-4">
-        <a href="/Manage" class="btn btn-secondary">Back to Manage Menu</a>
+        <a asp-controller="Home" asp-action="Landing" class="btn btn-secondary">Back to Home</a>
     </div>
 </main>
 
@@ -39,7 +42,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Product</h5>
+                <h5 class="modal-title">Edit Product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -63,15 +66,17 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="saveChangesBtn">Save Changes</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" id="saveChangesBtn">Save Changes</button>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+
         let currentProducts = [];
 
         async function loadProducts() {
@@ -93,6 +98,10 @@
                 }))
             ];
 
+            renderTable();
+        }
+
+        function renderTable() {
             const tableBody = document.getElementById("productTableBody");
             tableBody.innerHTML = "";
 
@@ -112,11 +121,18 @@
             });
         }
 
+        function showMessage(message) {
+            const msgBox = document.getElementById("statusMessage");
+            msgBox.classList.remove("d-none");
+            msgBox.innerText = message;
+            setTimeout(() => msgBox.classList.add("d-none"), 3000);
+        }
+
         document.addEventListener("click", async function (e) {
             if (e.target.classList.contains("edit-btn")) {
                 const id = parseInt(e.target.dataset.id);
                 const source = e.target.dataset.source;
-                const p = currentProducts.find(x => x.id == id && x.source === source);
+                const p = currentProducts.find(x => x.id === id && x.source === source);
 
                 if (p) {
                     document.getElementById("editProductId").value = p.id;
@@ -125,7 +141,6 @@
                     document.getElementById("editCategory").value = p.category;
                     document.getElementById("editPrice").value = p.price;
                     document.getElementById("editStock").value = p.stock;
-
                     new bootstrap.Modal(document.getElementById("editModal")).show();
                 }
             }
@@ -138,13 +153,14 @@
                     let local = JSON.parse(localStorage.getItem("products")) || [];
                     local = local.filter(p => p.id !== id);
                     localStorage.setItem("products", JSON.stringify(local));
-                    alert("Deleted from localStorage.");
-                    loadProducts();
+                    showMessage("Deleted from localStorage.");
                 } else {
                     await fetch(`https://fakestoreapi.com/products/${id}`, { method: "DELETE" });
-                    alert("Deleted from API.");
-                    loadProducts();
+                    showMessage("Deleted successfully");
                 }
+
+                currentProducts = currentProducts.filter(p => p.id !== id || p.source !== source);
+                renderTable();
             }
         });
 
@@ -157,16 +173,17 @@
                 name: document.getElementById("editName").value,
                 category: document.getElementById("editCategory").value,
                 price: parseFloat(document.getElementById("editPrice").value),
-                stock: parseInt(document.getElementById("editStock").value)
+                stock: parseInt(document.getElementById("editStock").value),
+                source: source
             };
 
             if (source === "local") {
                 let local = JSON.parse(localStorage.getItem("products")) || [];
                 const index = local.findIndex(p => p.id === id);
-                if (index > -1) {
+                if (index !== -1) {
                     local[index] = updated;
                     localStorage.setItem("products", JSON.stringify(local));
-                    alert("Updated in localStorage.");
+                    showMessage("Updated in localStorage.");
                 }
             } else {
                 await fetch(`https://fakestoreapi.com/products/${id}`, {
@@ -176,15 +193,18 @@
                         title: updated.name,
                         category: updated.category,
                         price: updated.price,
-                        description: "Updated",
+                        description: "Updated via ShopNest",
                         image: "https://via.placeholder.com/150"
                     })
                 });
-                alert("Updated via API.");
+                showMessage("Updated successfully");
             }
 
+            const idx = currentProducts.findIndex(p => p.id === id && p.source === source);
+            if (idx !== -1) currentProducts[idx] = updated;
+
             bootstrap.Modal.getInstance(document.getElementById("editModal")).hide();
-            loadProducts();
+            renderTable();
         });
 
         window.onload = loadProducts;
