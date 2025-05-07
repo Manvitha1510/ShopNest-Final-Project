@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "About Us - ShopNest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom, #f2f3ff, #e0e7ff);
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #3e3c8d;
+        }
+
+        .team-card {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+            .team-card:hover {
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+                transform: translateY(-5px);
+            }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 3px solid #3e3c8d;
+        }
+
+        .section-title {
+            margin-top: 4rem;
+        }
+
+        .erd-image {
+            max-width: 950px;
+            width: 95%;
+            display: block;
+            margin: 2rem auto;
+            border-radius: 10px;
+            border: 2px solid #aaa;
+        }
+
+        .github-section {
+            background: linear-gradient(135deg, #cbd5ff, #e6ecff);
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            color: #1a1a40;
+        }
+
+        footer {
+            background-color: #3e3c8d;
+            color: white;
+            padding: 1.5rem 0;
+        }
+
+        .btn-custom {
+            background-color: #4b49b3;
+            color: #fff;
+            border: none;
+        }
+
+            .btn-custom:hover {
+                background-color: #3a3799;
+            }
+    </style>
+}
+
+<main class="container py-5 mt-5">
+    <h1 class="text-center mb-4">Meet the ShopNest Team</h1>
+
+    <div class="row text-center">
+        <div class="col-md-3 mb-4">
+            <div class="team-card">
+                <img src="~/images/manvitha.jpg" alt="Manvitha" class="profile-img" />
+                <h5>Manvitha Challagondla</h5>
+                <p class="text-muted">Index & Data Visualization</p>
+                <p>Built homepage and analytics using Chart.js and Bootstrap. Defined layout and data design.</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="team-card">
+                <img src="~/images/shivani.jpg" alt="Shivani" class="profile-img" />
+                <h5>Shivani Adepu</h5>
+                <p class="text-muted">Create & Read Features</p>
+                <p>Developed product form and table rendering. Added form validation and responsiveness.</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="team-card">
+                <img src="~/images/pranavi.jpg" alt="Pranavi" class="profile-img" />
+                <h5>Bala Pranavi Gollamari</h5>
+                <p class="text-muted">Manage & Delete</p>
+                <p>Implemented CRUD logic, deletion confirmation modals, and UI polish with Bootstrap.</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="team-card">
+                <img src="~/images/bhargavi.jpg" alt="Bhargavi" class="profile-img" />
+                <h5>Bhargavi Gugulla</h5>
+                <p class="text-muted">Update & About Page</p>
+                <p>Designed update forms and wrote the About section. Focused on layout and structure.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- GitHub Section -->
+    <div class="github-section mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center mb-3 mb-md-0">
+                    <i class="bi bi-github display-4"></i>
+                </div>
+                <div class="col-md-10">
+                    <h2 class="mb-3">ShopNest GitHub Repository</h2>
+                    <p class="lead">Explore our full source code and technical documentation including:</p>
+                    <ul>
+                        <li><strong>API Endpoints:</strong> For product management</li>
+                        <li><strong>ERD Diagram:</strong> Updated data model visualization</li>
+                        <li><strong>CRUD Operations:</strong> Modular logic & reusable components</li>
+                        <li><strong>Challenges & Solutions:</strong> How we tackled roadblocks</li>
+                    </ul>
+                    <a href="https://github.com/Manvitha1510/ShopNest/blob/main/README.md" target="_blank" class="btn btn-custom mt-2">
+                        <i class="bi bi-box-arrow-up-right"></i> View GitHub README
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+}
